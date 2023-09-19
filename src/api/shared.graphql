@@ -1,0 +1,11 @@
+enum TodoStatus {
+    NOT_STARTED
+    IN_PROGRESS
+    DONE
+}
+
+type MutationResponse {
+    ok: Boolean!
+    id: Int
+    error: String
+}

@@ -1,0 +1,43 @@
+type Todo {
+    id: Int!
+    title: String!
+    description: String
+    done: Boolean!
+    subtasks: [Subtask]
+    list: List
+    status: TodoStatus!
+    deletedAt: String
+    createdAt: String!
+    updatedAt: String!
+}
+
+input CreateTodoInput {
+    title: String!
+    description: String
+    listId: Int
+}
+
+input UpdateTodoInput {
+    title: String
+    description: String
+    done: Boolean
+    status: TodoStatus
+}
+
+input Options {
+    cursor: Int
+    take: Int
+    status: TodoStatus
+    done: Boolean
+}
+
+type Query {
+    todos(options: Options): [Todo]
+    todo(id: Int!): Todo
+}
+
+type Mutation {
+    createTodo(input: CreateTodoInput!): Todo!
+    updateTodo(todoId: Int!, input: UpdateTodoInput!): Todo!
+    deleteTodo(todoId: Int!): Boolean!
+}

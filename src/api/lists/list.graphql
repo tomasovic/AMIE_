@@ -1,0 +1,28 @@
+type List {
+    id: Int!
+    name: String!
+    description: String
+    todos: [Todo]
+    user: User
+    createdAt: String!
+    updatedAt: String!
+}
+
+input CreateListInput {
+    name: String!
+}
+
+input UpdateListInput {
+    name: String
+}
+
+type Query {
+    lists: [List]
+    list(listId: Int!): List
+}
+
+type Mutation {
+    createList(input: CreateListInput!): List!
+    updateList(listId: Int!, input: UpdateListInput!): List!
+    deleteList(listId: Int!): Boolean!
+}

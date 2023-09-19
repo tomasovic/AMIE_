@@ -1,0 +1,174 @@
+# generated Schema - do not edit # 
+
+enum TodoStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  DONE
+}
+
+type MutationResponse {
+  ok: Boolean!
+  id: Int
+  error: String
+}
+
+type User {
+  id: Int!
+  email: String!
+  firstName: String
+  lastName: String
+  totalLists: Int!
+  totalTodos: Int!
+  isMe: Boolean!
+  thirdPartyAccounts: [ThirdPartyAccount]
+  todos: [Todo]
+  lists: [List]
+  createdAt: String!
+  updatedAt: String!
+}
+
+type ThirdPartyAccount {
+  id: Int!
+  service: String!
+  externalId: String!
+  accessToken: String!
+  refreshToken: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+input CreateUserInput {
+  email: String!
+  firstName: String
+  lastName: String
+  password: String!
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  password: String
+  thirdPartyAccount: ThirdPartyAccountInput
+}
+
+input ThirdPartyAccountInput {
+  service: String
+  externalId: String
+  accessToken: String
+  refreshToken: String
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+type AuthResponse {
+  user: User!
+  jwt: String!
+  createdAt: String
+  updatedAt: String
+}
+
+type Query {
+  users: [User]
+  user(userId: Int!): User
+  todos(options: Options): [Todo]
+  todo(id: Int!): Todo
+  subtasks(todoId: Int!): [Subtask]
+  subtask(subtaskId: Int!): Subtask
+  lists: [List]
+  list(listId: Int!): List
+}
+
+type Mutation {
+  signup(input: CreateUserInput!): AuthResponse!
+  login(input: LoginUserInput!): AuthResponse!
+  updateUser(input: UpdateUserInput!): User!
+  createTodo(input: CreateTodoInput!): Todo!
+  updateTodo(todoId: Int!, input: UpdateTodoInput!): Todo!
+  deleteTodo(todoId: Int!): Boolean!
+  createSubtask(input: CreateSubtaskInput!): Subtask!
+  updateSubtask(subtaskId: Int!, input: UpdateSubtaskInput!): Subtask!
+  deleteSubtask(subtaskId: Int!): Boolean!
+  createList(input: CreateListInput!): List!
+  updateList(listId: Int!, input: UpdateListInput!): List!
+  deleteList(listId: Int!): Boolean!
+}
+
+type Todo {
+  id: Int!
+  title: String!
+  description: String
+  done: Boolean!
+  subtasks: [Subtask]
+  list: List
+  status: TodoStatus!
+  deletedAt: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+input CreateTodoInput {
+  title: String!
+  description: String
+  listId: Int
+}
+
+input UpdateTodoInput {
+  title: String
+  description: String
+  done: Boolean
+  status: TodoStatus
+}
+
+input Options {
+  cursor: Int
+  take: Int
+  status: TodoStatus
+  done: Boolean
+}
+
+type Subtask {
+  id: Int!
+  title: String!
+  done: Boolean!
+  todo: Todo!
+  status: TodoStatus!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input CreateSubtaskInput {
+  title: String!
+  todoId: Int!
+}
+
+input UpdateSubtaskInput {
+  title: String
+  done: Boolean
+  status: TodoStatus
+}
+
+type List {
+  id: Int!
+  name: String!
+  description: String
+  todos: [Todo]
+  user: User
+  createdAt: String!
+  updatedAt: String!
+}
+
+input CreateListInput {
+  name: String!
+}
+
+input UpdateListInput {
+  name: String
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

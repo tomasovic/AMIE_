@@ -1,0 +1,31 @@
+type Subtask {
+    id: Int!
+    title: String!
+    done: Boolean!
+    todo: Todo!
+    status: TodoStatus!
+    createdAt: String!
+    updatedAt: String!
+}
+
+input CreateSubtaskInput {
+    title: String!
+    todoId: Int!
+}
+
+input UpdateSubtaskInput {
+    title: String
+    done: Boolean
+    status: TodoStatus
+}
+
+type Query {
+    subtasks(todoId: Int!): [Subtask]
+    subtask(subtaskId: Int!): Subtask
+}
+
+type Mutation {
+    createSubtask(input: CreateSubtaskInput!): Subtask!
+    updateSubtask(subtaskId: Int!, input: UpdateSubtaskInput!): Subtask!
+    deleteSubtask(subtaskId: Int!): Boolean!
+}
