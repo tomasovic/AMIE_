@@ -2,7 +2,7 @@
 
 Challenge TODO list
 
-# START ( with docker )
+# START ( with docker - fixed )
 - have docker, docker compose on the machine
 - clone the repo
 - start the commands from the project root folder
