@@ -18,6 +18,7 @@ services:
     networks:
       - mynetwork
   amie:
+    command: /bin/sh -c "yarn run migrate && yarn run start"
     build:
       context: .
       dockerfile: Dockerfile

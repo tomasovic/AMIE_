@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "src/launcher.ts",
   "scripts": {
-    "generate": "node ./dist/src/utils/types/generate-schema.js && graphql-codegen --config codegen.yaml && yarn run migrate",
+    "generate": "node ./dist/src/utils/types/generate-schema.js && graphql-codegen --config codegen.yaml",
     "compile": "rm -rf dist && tsc && yarn run generate && node --loader ts-node/esm ./dist/src/launcher.js",
     "start": "nodemon -e ts --exec \"yarn run compile\"",
     "seed": "ts-node --transpile-only prisma/seed.ts",
