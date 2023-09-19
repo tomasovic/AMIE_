@@ -1,0 +1,69 @@
+type User {
+    id: Int!
+    email: String!
+    firstName: String
+    lastName: String
+    totalLists: Int!
+    totalTodos: Int!
+    # if you dont want to use loggedInUser, you can use isMe
+    isMe: Boolean!
+    thirdPartyAccounts: [ThirdPartyAccount]
+    todos: [Todo]
+    lists: [List]
+    createdAt: String!
+    updatedAt: String!
+}
+
+type ThirdPartyAccount {
+    id:           Int!
+    service:      String!
+    externalId:  String!
+    accessToken:  String!
+    refreshToken: String
+    createdAt: String!
+    updatedAt: String!
+}
+
+input CreateUserInput {
+    email: String!
+    firstName: String
+    lastName: String
+    password: String!
+}
+
+input UpdateUserInput {
+    firstName: String
+    lastName: String
+    password: String
+    thirdPartyAccount: ThirdPartyAccountInput
+}
+
+input ThirdPartyAccountInput {
+    service: String
+    externalId: String
+    accessToken: String
+    refreshToken: String
+}
+
+input LoginUserInput {
+    email: String!
+    password: String!
+}
+
+type AuthResponse {
+    user: User!
+    jwt: String!
+    createdAt: String
+    updatedAt: String
+}
+
+type Query {
+    users: [User]
+    user(userId: Int!): User
+}
+
+type Mutation {
+    signup(input: CreateUserInput!): AuthResponse!
+    login(input: LoginUserInput!):AuthResponse!
+    updateUser(input: UpdateUserInput!): User!
+}

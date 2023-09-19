@@ -1,0 +1,49 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    hostname: redis
+    command: [ "redis-server", "--bind", "redis", "--port", "6379" ]
+    ports:
+      - '6379:6379'
+    networks:
+      - mynetwork
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: amie
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - mynetwork
+
+  amie:
+    build: ./
+    container_name: amie
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      PORT: ${PORT}
+      JWT_KEY: ${JWT_KEY}
+      APP_ENV: "development"
+      PAGE_TAKE: ${PAGE_TAKE}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    networks:
+      - mynetwork
+    depends_on:
+      - redis
+      - postgres
+    expose:
+      - "3000"
+
+networks:
+  mynetwork:
+    driver: bridge
