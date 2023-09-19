@@ -2,7 +2,20 @@
 
 Challenge TODO list
 
-# START
+# START ( with docker )
+- have docker, docker compose on the machine
+- clone the repo
+- start the commands from the project root folder
+```shell
+# build the images
+docker compose build
+# start the containers
+docker compose up
+# kill the containers
+docker compose down
+```
+
+# START ( without docker )
 - clone the repo
 - create postgres db called amie
 - start redis
